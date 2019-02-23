@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Undertanding 'This' Keyword</title>
+</head>
+<body>
+<script>
+
+    var vehicleName = 'Toyota';
+
+    function printVehicleNameOuter() {
+        console.log("Vehicle Name: " + window.vehicleName);
+    }
+
+
+    console.log(this);
+    printVehicleNameOuter();
+
+    /*
+    var Vehicle = {
+        vehicleName : 'Nissan',
+        printVehicleNameInner: printVehicleNameOuter
+    };
+    */
+
+    var Vehicle = {
+        vehicleName: 'Nissan',
+        printVehicleNameInner: function () {
+            {
+                return function () {
+                    console.log(this.vehicleName);
+                }
+            }
+
+        }
+    };
+
+    /*
+    var execute = Vehicle.printVehicleNameInner();
+    execute();
+    execute.call(Vehicle);
+    */
+
+    var execute_ = Vehicle.printVehicleNameInner().bind(Vehicle);
+    execute_();
+
+    //Vehicle.printVehicleNameInner(Vehicle);
+
+</script>
+</body>
+</html>
